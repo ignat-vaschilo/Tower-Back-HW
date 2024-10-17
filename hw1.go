@@ -5,6 +5,6 @@ import "fmt"
 
 // Main function
 func main() {
-
-	fmt.Println("Hello, World!")
+	var age rune = 'c'
+	fmt.Println("Hello, World!", age)
 }
