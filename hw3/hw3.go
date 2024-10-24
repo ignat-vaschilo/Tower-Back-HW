@@ -167,7 +167,6 @@ func main() {
 	}
 
 	new_lines := fAndSfunc(lines, *fFlag, *sFlag, *iFlag) //переделанные строки
-	fmt.Println("n", new_lines)
 	//answer - итоговый ответ
 	var answer []string
 	if *cFlag {
@@ -179,7 +178,6 @@ func main() {
 	} else {
 		answer = w_outFlags(lines, new_lines)
 	}
-	fmt.Println("ans =", answer)
 	//тут мы вывод делаем крч
 	if flag.NArg() > 1 {
 		outputFile, err := os.Create(flag.Arg(1)) //второй аргумет - файл вывода
