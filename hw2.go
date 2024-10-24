@@ -37,18 +37,24 @@ func (d *Deck) AddBack(val int) {
 	}
 }
 
-func (d *Deck) PopFront() int {
+func (d *Deck) PopFront() (int, bool) {
+	if d.first == nil {
+		return 0, false
+	}
 	value := d.first.data
 	d.first = d.first.next
 	d.first.prev = nil
-	return value
+	return value, true
 }
 
-func (d *Deck) PopBack() int {
+func (d *Deck) PopBack() (int, bool) {
+	if d.last == nil {
+		return 0, false
+	}
 	value := d.last.data
 	d.last = d.last.prev
 	d.last.next = nil
-	return value
+	return value, true
 }
 
 func (d *Deck) ViewOfDeck() {
@@ -79,11 +85,11 @@ func main() {
 	deck.AddFront(9)
 	deck.AddBack(0)
 	deck.ViewOfDeck()
-	x := deck.PopBack()
-	fmt.Println(x)
+	x, err := deck.PopBack()
+	fmt.Println(x, err)
 	deck.ViewOfDeck()
-	y := deck.PopFront()
-	fmt.Println(y)
+	y, err := deck.PopFront()
+	fmt.Println(y, err)
 	deck.ViewOfDeck()
 	fmt.Println(deck.IsExist(0))
 }
