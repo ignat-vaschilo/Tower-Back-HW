@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -17,7 +18,7 @@ func cFunc(data []string, new_data []string) []string {
 	last, c := 0, 1
 	for i := 1; i < len(new_data); i++ {
 		if new_data[i] != new_data[last] {
-			answer = append(answer, string(c)+data[last])
+			answer = append(answer, strconv.Itoa(c)+" "+data[last])
 			c = 1
 			last = i
 		} else {
@@ -25,7 +26,7 @@ func cFunc(data []string, new_data []string) []string {
 		}
 	}
 	//для последней строки
-	answer = append(answer, string(c)+data[last])
+	answer = append(answer, strconv.Itoa(c)+" "+data[last])
 	return answer
 }
 
@@ -77,7 +78,7 @@ func uFunc(data []string, new_data []string) []string {
 	return answer
 }
 
-//шоб строчки переделать, как хотят
+// шоб строчки переделать, как хотят
 func fAndSfunc(data []string, num_fields int, num_chars int, i_flag bool) []string {
 	new_data := []string{} //тут будут переделанные строки
 	for i := 0; i < len(data); i++ {
@@ -94,7 +95,7 @@ func fAndSfunc(data []string, num_fields int, num_chars int, i_flag bool) []stri
 	return new_data
 }
 
-//если флагов ваще нет
+// если флагов ваще нет
 func w_outFlags(data []string, new_data []string) []string {
 	answer := []string{}
 	if len(new_data) == 0 {
@@ -112,7 +113,7 @@ func w_outFlags(data []string, new_data []string) []string {
 	return answer
 }
 
-//вывод
+// вывод
 func outputFunc(writer io.Writer, output []string) {
 	for _, line := range output {
 		fmt.Fprintln(writer, line)
@@ -130,7 +131,7 @@ func main() {
 	var iFlag = flag.Bool("i", false, "не учитывать регистр букв")
 	flag.Parse()
 
-	file := os.Stdin //file - стандартный поток
+	file := os.Stdin     //file - стандартный поток
 	if flag.NArg() > 0 { //если после флага есть какой-то аргумент (нужен файл)
 		var err error
 		//открыли файлик
@@ -166,7 +167,7 @@ func main() {
 	}
 
 	new_lines := fAndSfunc(lines, *fFlag, *sFlag, *iFlag) //переделанные строки
-
+	fmt.Println("n", new_lines)
 	//answer - итоговый ответ
 	var answer []string
 	if *cFlag {
@@ -178,7 +179,7 @@ func main() {
 	} else {
 		answer = w_outFlags(lines, new_lines)
 	}
-
+	fmt.Println("ans =", answer)
 	//тут мы вывод делаем крч
 	if flag.NArg() > 1 {
 		outputFile, err := os.Create(flag.Arg(1)) //второй аргумет - файл вывода
